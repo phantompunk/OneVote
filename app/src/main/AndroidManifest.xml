@@ -24,6 +24,14 @@
             android:name=".ResultActivity"
             android:label="@string/title_activity_result" >
         </activity>
+        <activity
+            android:name=".OptionsActivity"
+            android:label="@string/title_activity_options" >
+        </activity>
+        <activity
+            android:name=".ManInputActivity"
+            android:label="@string/title_activity_man_input" >
+        </activity>
     </application>
 
 </manifest>

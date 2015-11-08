@@ -1,6 +1,8 @@
 package edu.moranrvcu.onevote;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -36,6 +38,7 @@ public class ScannerActivity extends AppCompatActivity {
 
 // Starting Activity
         startActivityForResult(intent, REQUEST_CODE);
+
     }
 
     @Override
@@ -72,4 +75,29 @@ public class ScannerActivity extends AppCompatActivity {
         // recognition
         return new RecognizerSettings[] { sett };
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == ScanCard.RESULT_OK && data != null) {
+                // perform processing of the data here
+
+                // for example, obtain parcelable recognition result
+                Bundle extras = data.getExtras();
+                Parcelable[] resultArray = data.getParcelableArrayExtra(ScanCard.EXTRAS_RECOGNITION_RESULT_LIST);
+
+                // Each element in resultArray inherits BaseRecognitionResult class and
+                // represents the scan result of one of activated recognizers that have
+                // been set up. More information about this can be found in
+                // "Recognition settings and results" chapter
+
+                // Or, you can pass the intent to another activity
+                data.setComponent(new ComponentName(this, ResultsActivity.class));
+                startActivity(data);
+            }
+        }
+    }
+
 }
